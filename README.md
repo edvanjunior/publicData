@@ -37,7 +37,7 @@ Acesse o browser através do localhost na porta em que o processo está sendo ex
 
 2. Após a conexão, selecione o banco a se trabalhar, e clique em Track em todas as tabelas e constraints do banco.
 
-Vá até as configurações e selecione Import Metadata:
+3. Vá até as configurações e selecione Import Metadata:
 ![image](https://user-images.githubusercontent.com/42448044/177585949-ee478461-ac28-40d5-9036-ad288de0aab5.png)
 
 Importe o arquivo hasura_metadata_2022_07_04_05_49_45_860.json
