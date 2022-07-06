@@ -1,0 +1,100 @@
+-- Global project configuration.
+--
+-- This file can be overridden with cabal.project.local (see e.g. cabal/dev.project)
+--
+-- If you need to switch between several local configurations you can also create a
+-- symbolic link to this file in the project root directory; e.g.:
+--     $ ln -s cabal.project myconfig.project
+--     $ ln -s cabal.project.freeze myconfig.project.freeze
+--
+-- ...and then create a new set of overrides in:
+--     myconfig.project.local
+--
+-- ...and then invoke cabal with
+--     $ cabal new-build --project-file=myconfig.project
+--
+-- See: https://www.haskell.org/cabal/users-guide/nix-local-build.html#configuring-builds-with-cabal-project
+
+with-compiler: ghc-8.10.7
+
+-- package-level parallelism:
+jobs: $ncpus
+
+packages: server
+
+-- https://github.com/andrewthad/haskell-ip/issues/79
+allow-newer: ip:attoparsec
+
+package *
+  -- NOTE: this gets applied to both local (hasura) packages and dependencies,
+  -- but optimizations for local hasura packages are overridden/controlled
+  -- via the 'optimize-hasura' flag.
+  optimization: 2
+  -- For tooling, e.g. 'weeder', and IDE-like stuff:
+  ghc-options: -fwrite-ide-info
+
+  haddock-html: true
+  haddock-hoogle: true
+  haddock-hyperlink-source: true
+  haddock-quickjump: true
+  haddock-internal: true
+
+package graphql-engine
+  ghc-options: -j
+  haddock-options: "--show-all"
+
+source-repository-package
+  type: git
+  location: https://github.com/hasura/kriti-lang.git
+  tag: v0.3.1
+
+source-repository-package
+  type: git
+  location: https://github.com/hasura/pg-client-hs.git
+  tag: 9393c9113a572632b999acbd20ab85386a165103
+
+source-repository-package
+  type: git
+  location: https://github.com/hasura/graphql-parser-hs.git
+  tag: 47feca50fbfe6a059d02910c283e7567fbc1d7ef
+
+source-repository-package
+  type: git
+  location: https://github.com/hasura/ci-info-hs.git
+  tag: be578a01979fc95137cc2c84827f9fafb99df60f
+
+source-repository-package
+  type: git
+  location: https://github.com/hasura/pool.git
+  tag: 427c8f47b5a0de858780b0a9522ad953197b1658
+
+source-repository-package
+  type: git
+  location: https://github.com/fpco/odbc.git
+  tag: 3d80ffdd4a2879f0debecabb56d834d2d898212b
+
+package odbc
+  ghc-options: -Wwarn
+  -- Our CI compiles with -Werror, which is also applied to those packages
+  -- while it's fine for packages we maintain, we can't actually enforce
+  -- that third-party packages are warning-free, hence this -Wno-error.
+  -- When the changes in odbc are released, we can instead depend on
+  -- the hackage version, and remove it from this list of packages.
+
+source-repository-package
+  type: git
+  location: https://github.com/hasura/ekg-core.git
+  tag: ac51c3834e242833e9735394295cbcaa583233f8
+
+source-repository-package
+  type: git
+  location: https://github.com/hasura/ekg-json.git
+  tag: 84990712c165d7e3e76b2b289640ef8b5033f12f
+
+-- This is v1.2.3.2 with https://github.com/haskell/text/pull/348
+-- cherry-picked. When 1.3 is released we can move from this fork.
+source-repository-package
+  type: git
+  location: https://github.com/hasura/text.git
+  tag: 874c3164fadf39a83382359d2b6ce941a3e134da
+
