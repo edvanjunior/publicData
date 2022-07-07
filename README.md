@@ -6,7 +6,9 @@ Neste arquivo estão as instruções necessárias para a utilização das bases 
 #### Dependências
 [PostgreSQL, preferencialmente na versão 10](https://www.postgresql.org/ "PostgreSQL, preferencialmente na versão 10")
 
-Para a importação do banco de dados, será utilizado o arquivo TCC-2022_07_06_10_49_02-dump.sql disponível na pasta raiz deste repositório.
+
+
+Para a importação do banco de dados, será utilizado o arquivo TCC-2022_07_06_10_49_02-dump.sql disponível [aqui](https://ufcbr-my.sharepoint.com/:u:/g/personal/edvan_junior_alu_ufc_br/EeMqc6ttj2ZKjdDOhu0IT4YBx5DbxDQ97sISB0q6NxoBDA?e=Au18iM "aqui").
 1. Crie um banco de dados.
 `create database dados`
 2. Import os dados através do terminal.
